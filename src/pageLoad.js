@@ -1,4 +1,4 @@
-export default function createInitialLayout () {
+export function createInitialLayout () {
     const contentDiv = document.querySelector('#content');
 
     // Header Stuff
@@ -10,9 +10,11 @@ export default function createInitialLayout () {
 
     const logoDiv = document.createElement('div');
     logoDiv.classList.add('header-logo');
-    const logo = document.createElement('h2');
-    logo.innerText = 'NOBU';
-    logoDiv.appendChild(logo);
+    const logoWrapper = document.createElement('a');
+    logoWrapper.classList.add('logo-main');
+    logoWrapper.href = '#';
+    logoWrapper.innerHTML = '<h2>NOBU</h2>';
+    logoDiv.appendChild(logoWrapper);
     
     const tabsDiv = document.createElement('div');
     tabsDiv.classList.add('header-tabs');
@@ -84,6 +86,35 @@ export default function createInitialLayout () {
 
 
 };
+
+export function recreateMainPage() {
+    const menuItems = document.querySelector('.main>div');
+    menuItems.innerHTML = '';
+    menuItems.className = 'menu-items';
+    let bolognese = menuItem('Bolognese', 'A classic italian dish that is known \
+    around the world for its simplicity and incredible taste.', 'bolognese.jpeg', `Photo by <a href="https://unsplash.com/@sorinpopa?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">sorin popa</a> on <a href="https://unsplash.com/s/photos/bolognese?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>`);
+    let caesar = menuItem("Caesar's salad", 'An immortal foundational dish.', 'caesar.jpeg', 'Photo by <a href="https://unsplash.com/@yoavaziz?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Yoav Aziz</a> on <a href="https://unsplash.com/s/photos/caesar-salad?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>');
+    let steak = menuItem('Tomahawk Steak', 'Meat', 'steak.jpeg', 'Photo by <a href="https://unsplash.com/@mham3816?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Madie Hamilton</a> on <a href="https://unsplash.com/s/photos/tomahawk-steak?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>');
+    let menuArray = [bolognese, caesar, steak];
+    menuArray.forEach(item => {
+        const menuCard = document.createElement('div');
+        menuCard.classList.add('menu-card');
+        let img = document.createElement('div');
+        img.classList.add('item-img');
+        img.style = `background: url(../src/${item.imageUrl}); background-size: cover; height: 150px;`;
+        img.innerHTML = `<p>${item.author}</p>`;
+        let title = document.createElement('h3');
+        title.textContent = item.name;
+        let description = document.createElement('p');
+        description.textContent = item.description;
+        menuCard.append(img, title, description);
+        menuItems.append(menuCard);
+    })
+
+    const title = document.querySelector('.title');
+    title.textContent = 'EXTRAVAGANCE AT ITS BEST';
+
+}
 
 let menuItem = function(name, description, imageUrl, author) {
     return {name, description, imageUrl, author}
